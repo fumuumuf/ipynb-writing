@@ -102,7 +102,7 @@ docker-compose -f docker-compose.pdf.yml up pdf
 
 metadata は, メニューの **Edit > EditNotebook Metadata** から編集します.
 
-```json
+```
  "metadata": {
   "authors": [
    {
@@ -111,7 +111,7 @@ metadata は, メニューの **Edit > EditNotebook Metadata** から編集し�
   ],
   "title": "pdf のタイトル",
 
-// ... その他の設定
+ ... その他の設定
 
  },
 ```
