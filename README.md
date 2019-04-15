@@ -16,7 +16,7 @@
 手元でpdf/htmlにビルドしたい場合は以下を実行します
 
 ```sh
-docker build -t ipybook . && docker run -v `pwd`/public:/book/public: -it ipybook make
+docker-compose -f docker-compose.pdf.yml up make
 ```
 
 `public/`以下にnotebookをpdfをhtmlで吐き出したものが保存されます。
@@ -27,6 +27,17 @@ docker build -t ipybook . && docker run -v `pwd`/public:/book/public: -it ipyboo
 以下のurlから確認とダウンロードができます。
 
 `http://{グループ名}.gitlab.io/{リポジトリ名}/`
+
+#### fumuumuf 版
+
+gitlab pages は private リポジトリでも公開されてしまうので, デフォルトでは機能しないようにしています. 
+この自動ビルドを使用する場合は
+
+```console
+cp exapmle.gitlab-ci.yml .gitlab-ci.yml
+```
+
+として `.gitlab-ci.yml` を作成してください.
 
 
 ## Textlint
@@ -64,3 +75,43 @@ docker build -t ipybook . && docker run -v `pwd`/public:/book/public: -it ipyboo
 ![画像test](../images/green.png)
 ```
 
+## pdf2
+
+上記までのオリジナルのものとは別に, `make pdf2` で PDF を出力できるようにしました.
+
+オリジナルのものとは以下の違いがあります.
+
++ 画像は `notebook/image` ディレクトリに配置する (`image/`ではエラーとなる)
++ pdf 作成時に latex の関連ファイルが出力されない
++ デフォルトでは input セルは出力されない. 出力したい場合は `make pdf2 EXCLUDE_INPUT=True` を実行する
+
+#### PDF出力
+
+pdf2 での PDF 出力は次のコマンドを実行します.
+
+```
+docker-compose -f docker-compose.pdf.yml up pdf
+```
+
+成功すると, `public/pdf` 以下に PDF が出力されます.
+
+
+## title と author
+
+タイトルと著者は notebook の metadata の `title` と `authors` で設定できます.  
+
+metadata は, メニューの **Edit > EditNotebook Metadata** から編集します.
+
+```
+ "metadata": {
+  "authors": [
+   {
+    "name": "著者A"
+   }
+  ],
+  "title": "pdf のタイトル",
+
+ ... その他の設定
+
+ },
+```

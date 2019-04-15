@@ -1,0 +1,15 @@
+version: "2.3"
+services:
+  ubuntu-latex:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+    container_name: ipynb-writing
+    volumes:
+      - .:/book
+      - ${PWD}/.jupyter/nbconfig:/root/.jupyter/nbconfig
+      - ${PWD}/.jupyter/jupyter_nbconvert_config.py:/root/.jupyter/jupyter_nbconvert_config.py
+      - ${PWD}/.jupyter/nbconvert_templates:/root/.jupyter/nbconvert_templates
+
+    tty: true
