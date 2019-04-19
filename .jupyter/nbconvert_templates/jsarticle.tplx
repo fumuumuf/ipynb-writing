@@ -16,6 +16,7 @@
 
 ((* block docclass *))
 \documentclass[a4paper,dvipdfmx]{jsarticle}
+\usepackage{here}
 ((* endblock docclass *))
 
 % enable jp title
@@ -23,3 +24,16 @@
 ((*- set nb_title = nb.metadata.get('title', '') or resources['metadata']['name'] -*))
 \title{((( nb_title | escape_latex )))}
 ((*- endblock title *))
+
+% Draw a figure using the graphicx package.
+((* macro draw_figure(filename) -*))
+\\
+((* set filename = filename | posix_path *))
+((*- block figure scoped -*))
+    \begin{figure}[H]
+    \centering
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{((( filename )))}
+    \end{figure}
+    { \hspace*{\fill} \\}
+((*- endblock figure -*))
+((*- endmacro *))
